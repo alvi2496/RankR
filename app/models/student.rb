@@ -5,6 +5,7 @@ class Student < ApplicationRecord
   has_many :received_ranks, class_name: 'Rank', foreign_key: :receiver_id, dependent: :destroy
   has_and_belongs_to_many :assignments, dependent: :destroy
   has_many :assignments_students
+  has_and_belongs_to_many :courses
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
