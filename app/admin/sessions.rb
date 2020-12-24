@@ -1,7 +1,7 @@
 ActiveAdmin.register Session do
 
   permit_params :admin_user_id, :title, :default_session, 
-                courses_attributes: [:title]
+                courses_attributes: [:id, :title, :_destroy]
 
   index do
     selectable_column
@@ -15,7 +15,7 @@ ActiveAdmin.register Session do
     f.inputs do
       f.input :admin_user_id, input_html: { value: current_admin_user.id }, as: :hidden
       f.input :title
-      f.input :default_session
+      f.input :default_session unless f.object.new_record?
     end
     f.has_many :courses do |course|
       course.inputs do
