@@ -44,15 +44,12 @@ ActiveRecord::Schema.define(version: 2020_12_20_025746) do
 
   create_table "assignments", force: :cascade do |t|
     t.bigint "course_id"
-    t.string "year"
-    t.string "course"
     t.string "name"
     t.integer "status"
     t.float "adjustment_factor_cap"
-    t.datetime "deadline"
+    t.decimal "full_grade"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "full_grade", default: 0.0
     t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
