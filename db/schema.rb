@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_052459) do
+ActiveRecord::Schema.define(version: 2020_12_20_025746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,15 +40,6 @@ ActiveRecord::Schema.define(version: 2020_12_20_052459) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "admin_users_courses", force: :cascade do |t|
-    t.bigint "admin_user_id"
-    t.bigint "course_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["admin_user_id"], name: "index_admin_users_courses_on_admin_user_id"
-    t.index ["course_id"], name: "index_admin_users_courses_on_course_id"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -125,15 +116,6 @@ ActiveRecord::Schema.define(version: 2020_12_20_052459) do
     t.index ["team_id"], name: "index_students_on_team_id"
   end
 
-  create_table "students_courses", force: :cascade do |t|
-    t.bigint "student_id"
-    t.bigint "course_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["course_id"], name: "index_students_courses_on_course_id"
-    t.index ["student_id"], name: "index_students_courses_on_student_id"
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string "team_id", null: false
     t.string "team_name"
@@ -141,16 +123,6 @@ ActiveRecord::Schema.define(version: 2020_12_20_052459) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "team_grade", default: 0.0
-  end
-
-  create_table "teams_assignments", force: :cascade do |t|
-    t.bigint "team_id"
-    t.bigint "assignment_id"
-    t.decimal "grade"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["assignment_id"], name: "index_teams_assignments_on_assignment_id"
-    t.index ["team_id"], name: "index_teams_assignments_on_team_id"
   end
 
 end
