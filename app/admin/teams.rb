@@ -1,14 +1,15 @@
 ActiveAdmin.register Team do
 
-  permit_params :team_id, :team_name, :team_grade
+  permit_params :course_id, :name
+
 
   form do |f|
+    session = current_admin_user.sessions&.where(default_session: true)&.first
+    courses = session&.courses
     f.inputs do
-      f.input :team_id, label: 'Team Id'
-      f.input :team_name, label: 'Team Name'
-      f.input :team_grade, label: 'Team Grade'
+      f.input :course, collection: courses
+      f.input :name
     end
-    f.actions
+    f.actions 
   end
-  
 end

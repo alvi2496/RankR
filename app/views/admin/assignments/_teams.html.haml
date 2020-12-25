@@ -8,9 +8,9 @@
         .panel.panel-default
             .panel-heading
                 %h4.panel-title
-                %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse#{team.team_id}"}
-                    %h4= team.team_name
-            %div{id: "collapse#{team.team_id}", class: "panel-collapse collapse"}
+                %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse#{team.id}"}
+                    %h4= team.name
+            %div{id: "collapse#{team.id}", class: "panel-collapse collapse"}
                 .panel-body
                     %table.table.table-responsive-md.table-striped
                         %thead
@@ -43,8 +43,10 @@
                                     %td= assignment.assignments_students.find_by(student_id: student.id).adjustment_factor
                                     %td= team.team_grade
                                     %td= assignment.assignments_students.find_by(student_id: student.id).individual_grade
-                        
-                    - if (team.students.length() - team.students.first.received_ranks.where(assignment_id: assignment.id).length()) > 0
+                    
+                    - received_ranks = team.students.first&.received_ranks&.where(assignment_id: assignment.id)&.length()
+                    - unrank_count = team.students.length()  
+                    - if received_ranks && unrank_count - received_ranks > 0
                         %h4 Students yet to submit peer review
                         %table.table.table-responsive-md.table-striped
                             %thead
@@ -55,6 +57,8 @@
                             %tbody
                                 - team.students.each do |student|
                                     - if student.has_not_ranked_for(assignment.id)
+                                        %tr 
+                                    %tr 
                                         %tr 
                                             %td= student.student_id
                                             %td= student.name

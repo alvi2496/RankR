@@ -7,7 +7,6 @@ ActiveAdmin.register Assignment do
     session = current_admin_user.sessions&.where(default_session: true)&.first
     courses = session&.courses
     f.inputs do
-      # f.input :model_id, collection: Model.all.map { |m| [m.id.to_s + ' - ' + m.name, m.id] }, selected: object.model_id
       f.input :course, collection: courses
       f.input :name
       f.input :status
@@ -18,8 +17,8 @@ ActiveAdmin.register Assignment do
   end
   
   show do
-    teams = Team.all.order(team_id: :asc)
     assignment = Assignment.find(params[:id])
+    teams = assignment.teams.order(name: :asc)
     ranks = assignment.ranks
     render 'teams', {
       teams: teams, ranks: ranks, 

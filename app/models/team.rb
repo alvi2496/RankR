@@ -1,6 +1,10 @@
 class Team < ApplicationRecord
     has_many :students
-    has_and_belongs_to_many :teams
+    belongs_to :course
+    has_and_belongs_to_many :assignments
+    has_many :assignments_teams
+
+    after_create :assign_assignments
 
     def calculate_team_average(assignment_id)
         sum = 0
@@ -11,5 +15,14 @@ class Team < ApplicationRecord
         team_average = sum == 0 ? 0 : (sum / self.students.length())&.round(2)
         self.update(team_average: team_average)
         return self
+    end
+
+    private
+
+    def assign_assignments
+        course = Course.find(self.course_id)
+        course.assignments.each do |assignment|
+            AssignmentsTeam.create(assignment_id: assignment.id, team_id: self.id, grade: 0.0)
+        end
     end
 end

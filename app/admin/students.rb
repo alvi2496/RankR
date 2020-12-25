@@ -1,9 +1,8 @@
 ActiveAdmin.register Student do
 
-  permit_params :team_id, :student_id, :name, :email
+  permit_params :student_id, :name, :email
 
   form do |f|
-    input :team_id
     input :student_id
     input :name
     input :email
@@ -11,7 +10,7 @@ ActiveAdmin.register Student do
   end
 
   filter :team, collection: -> {
-    Team.all.map { |team| [team.team_name, team.id] }
+    Team.all.map { |team| [team.name, team.id] }
   }
 
   filter :email
