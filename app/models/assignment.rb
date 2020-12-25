@@ -4,7 +4,7 @@ class Assignment < ApplicationRecord
     has_and_belongs_to_many :students
     has_many :assignments_students
     has_and_belongs_to_many :teams
-    has_many :assignments_teams
+    has_many :assignments_teams, dependent: :destroy
 
     enum status: [:inactive, :active]
 
