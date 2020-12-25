@@ -1,12 +1,31 @@
 ActiveAdmin.register Student do
 
-  permit_params :student_id, :name, :email
+  permit_params :team_id, :student_id, :name, :email
 
-  form do |f|
-    input :student_id
-    input :name
-    input :email
-    actions
+  # form do |f|
+  #   session = current_admin_user.sessions&.where(default_session: true)&.first
+  #   courses = session&.courses
+  #   teams = Team.where(course_id: courses&.pluck(:id))
+  #   f.inputs do
+  #     f.input :team, collection: teams.map { |t| ["#{t.course.title} - #{t.name}", t.id] }, value: teams.pluck(:id)
+  #     f.input :student_id
+  #     f.input :name
+  #     f.input :email
+  #   end
+  #   f.actions 
+  # end
+
+  action_item :only => :index do
+    link_to 'Upload CSV', :action => 'upload_csv'
+  end
+
+  collection_action :upload_csv do
+    render "admin/students/upload_csv"
+  end
+
+  collection_action :import_csv, :method => :post do
+    CsvDb.convert_save("post", params[:dump][:file])
+    redirect_to :action => :index, :notice => "CSV imported successfully!"
   end
 
   filter :team, collection: -> {
