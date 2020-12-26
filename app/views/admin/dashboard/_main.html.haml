@@ -1,3 +1,16 @@
-%div.list-group
-    - assignments.each do |assignment|
-        = link_to "#{assignment.name}", admin_assignment_path(assignment), class: "list-group-item list-group-item-action"
+-# %div.list-group
+-#     - assignments.each do |assignment|
+-#         = link_to "#{assignment.name}", admin_assignment_path(assignment), class: "list-group-item list-group-item-action"
+
+#accordion.panel-group
+    - courses&.each do |course|
+        .panel.panel-default
+            .panel-heading
+                %h4.panel-title
+                %a{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse#{course.id}"}
+                    %h4= course.title
+            %div{id: "collapse#{course.id}", class: "panel-collapse collapse"}
+                .panel-body
+                    %div.list-group
+                        - course.assignments&.order(name: :asc).each do |assignment|
+                            = link_to "#{assignment.name}", admin_assignment_path(assignment), class: "list-group-item list-group-item-action"

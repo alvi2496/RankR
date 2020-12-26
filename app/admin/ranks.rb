@@ -1,18 +1,55 @@
 ActiveAdmin.register Rank do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :assignment_id, :ranker_id, :receiver_id, :rating, :comment
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:assignment_id, :ranker_id, :receiver_id, :rating, :comment]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  permit_params :rating, :comment
+
+  filter :assignment, collection: -> {
+    Assignment.all.map { |assignment| [assignment.name, assignment.id] }
+  }
+  filter :ranker
+  filter :receiver
+  filter :rating, as: :select, collection: Rank.ratings
+
+  index do
+    selectable_column
+    column "Assignment" do |rank|
+      rank.assignment&.name&.humanize 
+    end
+    column "Ranker" do |rank|
+      rank.ranker&.name 
+    end
+    column "Receiver" do |rank|
+      rank.receiver&.name 
+    end
+    column "Rating" do |rank|
+      rank.rating&.humanize
+    end
+    column "Comment" do |rank|
+      rank.comment&.humanize
+    end
+    column :actions do |student|
+      links = []
+      links << link_to('Show', admin_rank_path(student))
+      links << link_to('Edit', edit_admin_rank_path(student))
+      links.join(' ').html_safe
+    end
+  end
+
+  csv do
+    column "Assignment" do |rank|
+      rank.assignment&.name&.humanize 
+    end
+    column "Ranker" do |rank|
+      rank.ranker&.name 
+    end
+    column "Receiver" do |rank|
+      rank.receiver&.name 
+    end
+    column "Rating" do |rank|
+      rank.rating&.humanize
+    end
+    column "Comment" do |rank|
+      rank.comment&.humanize
+    end
+  end
   
 end

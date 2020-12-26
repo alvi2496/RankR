@@ -7,10 +7,13 @@ Rails.application.routes.draw do
 
   devise_for :students, controllers: {
     registrations: 'students/registrations',
-    sessions: 'students/sessions'
+    sessions: 'students/sessions',
+    passwords: 'students/passwords'
   }
 
   resources :assignments, only: [:index, :show] do
     resources :ranks, only: [:index, :new, :create] 
   end
+
+  resources :ranks, only: :show
 end

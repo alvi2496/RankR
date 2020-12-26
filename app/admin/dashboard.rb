@@ -3,10 +3,10 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     
-    teams = Team.all
-    assignments = Assignment.all.order(id: :asc)
+    session = current_admin_user.sessions&.where(default_session: true)&.first
+    courses = session&.courses&.includes(:assignments)
     render 'main', {
-      assignments: assignments
+      courses: courses
     }
   end
 end

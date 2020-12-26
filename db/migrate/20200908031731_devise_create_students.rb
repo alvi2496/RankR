@@ -4,8 +4,9 @@ class DeviseCreateStudents < ActiveRecord::Migration[6.0]
   def change
     create_table :students do |t|
       ## Database authenticatable
-      t.belongs_to :team
+      t.belongs_to :team, optional: true
       t.string :email,              null: false, default: ""
+      t.string :raw_password
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -18,7 +19,7 @@ class DeviseCreateStudents < ActiveRecord::Migration[6.0]
       t.string :student_id, null: false
       t.string :name
       t.string :github_id
-
+      t.string :password_reset_token
 
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
