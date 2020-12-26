@@ -32,7 +32,7 @@ app.yaml
 ## Environment normalization:
 /.bundle
 /vendor/bundle
-/vendor
+/vendor/
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
