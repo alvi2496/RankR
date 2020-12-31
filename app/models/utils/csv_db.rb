@@ -1,5 +1,5 @@
 require 'csv'
-class CsvDb
+class Utils::CsvDb
   class << self
     def convert_save(model_name, csv_data)
       csv_file = csv_data.read
@@ -13,8 +13,10 @@ class CsvDb
             value = row[column_iterator]
             new_object.send "#{key}=", value
           end
+          puts(value)
         end
-        new_object.save
+        puts(new_object)
+        new_object.save!
       end
     end
   end

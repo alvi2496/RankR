@@ -4,7 +4,6 @@ class DeviseCreateStudents < ActiveRecord::Migration[6.0]
   def change
     create_table :students do |t|
       ## Database authenticatable
-      t.belongs_to :team, optional: true
       t.string :email,              null: false, default: ""
       t.string :raw_password
       t.string :encrypted_password, null: false, default: ""

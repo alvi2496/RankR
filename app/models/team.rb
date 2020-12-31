@@ -1,5 +1,4 @@
 class Team < ApplicationRecord
-    has_many :students
     belongs_to :course
     has_and_belongs_to_many :assignments
     has_many :assignments_teams, dependent: :destroy
