@@ -1,0 +1,16 @@
+%h3 Enroll Students
+
+= form_for :dump, :url=>{:action=>"import_csv"}, :html => { :multipart => true } do |f|
+  %table
+    %tr{ hidden: true }
+      %td
+        = f.hidden_field :course_id, value: course.id
+    %tr
+      %td
+        %label{:for => "dump_file"}
+          Select a CSV File :
+      %td
+        = f.file_field :file
+    %tr
+      %td
+        = submit_tag 'Submit', class: 'btn btn-primary'

@@ -8,13 +8,7 @@ class Assignment < ApplicationRecord
 
     enum status: [:inactive, :active]
 
-    after_create :assign_teams
-
-    def assign_students
-        Student.all.each do |student|
-            AssignmentsStudent.create(assignment_id: self.id, student_id: student.id)
-        end
-    end
+    after_create :assign_teams, :assign_students
 
     private
 
@@ -22,6 +16,13 @@ class Assignment < ApplicationRecord
         course = Course.find(self.course_id)
         course.teams.each do |team|
             AssignmentsTeam.create(assignment_id: self.id, team_id: team.id, grade: 0.0)
+        end
+    end
+
+    def assign_students
+        course = Course.find(self.course_id)
+        course.students.each do |student|
+            AssignmentsStudent.create(assignment_id: self.id, student_id: student.id)
         end
     end
 end

@@ -4,5 +4,5 @@ class Course < ApplicationRecord
     has_many :teams
     has_many :students_teams
     # has_and_belongs_to_many :admin_users
-    # has_and_belongs_to_many :students
+    has_and_belongs_to_many :students
 end
