@@ -8,7 +8,7 @@ class Assignment < ApplicationRecord
 
     enum status: [:inactive, :active]
 
-    after_create :assign_students, :assign_teams
+    after_create :assign_teams
 
     def assign_students
         Student.all.each do |student|

@@ -4,6 +4,7 @@ class Student < ApplicationRecord
   has_and_belongs_to_many :assignments
   has_many :assignments_students, dependent: :destroy
   has_and_belongs_to_many :courses
+  has_and_belongs_to_many :teams
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
