@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_011917) do
     t.string "rank"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "individual_grade", default: 0.0
     t.index ["assignment_id"], name: "index_assignments_students_on_assignment_id"
     t.index ["student_id"], name: "index_assignments_students_on_student_id"
   end
@@ -150,7 +149,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_011917) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "team_grade", default: 0.0
     t.index ["course_id"], name: "index_teams_on_course_id"
   end
 

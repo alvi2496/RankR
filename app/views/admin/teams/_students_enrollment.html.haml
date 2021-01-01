@@ -1,0 +1,24 @@
+%h2 Student Enrollment
+
+= form_for :team_members, url: enroll_students_admin_teams_path do |f|
+    %table.table.table-responsive-md.table-striped
+        %thead
+            %tr
+                %th Student
+        %tbody
+            %tr{ hidden: true }
+                %td
+                    = f.hidden_field :course_id, value: course.id
+            %tr{ hidden: true }
+                %td
+                    = f.hidden_field :team_id, value: team.id
+            = f.collection_check_boxes :student_ids, course.students, :id, :name do |cb|
+                %tr
+                    %td
+                        = cb.label class: "check_box" do
+                            = cb.check_box class: "check_box"
+                            = "#{cb.object.student_id} - #{cb.object.name}"
+            %tr{ hidden: students.empty? }
+                %td
+                    = submit_tag 'Submit', class: 'btn btn-primary'
+
