@@ -1,4 +1,7 @@
 ActiveAdmin.register Course do
+
+  menu priority: 2
+
   permit_params :session_id, :title
 
   form do |f|

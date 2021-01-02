@@ -1,5 +1,7 @@
 ActiveAdmin.register Student do
 
+  menu priority: 6
+
   permit_params :team_id, :student_id, :name, :email
 
   # form do |f|

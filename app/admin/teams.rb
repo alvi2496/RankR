@@ -1,5 +1,7 @@
 ActiveAdmin.register Team do
 
+  menu priority: 4
+
   permit_params :course_id, :name
 
 

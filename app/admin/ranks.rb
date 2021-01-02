@@ -1,5 +1,7 @@
 ActiveAdmin.register Rank do
 
+  menu priority: 5
+
   permit_params :rating, :comment
 
   filter :assignment, collection: -> {

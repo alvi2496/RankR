@@ -1,5 +1,7 @@
 ActiveAdmin.register Assignment do
 
+  menu priority: 3
+
   permit_params :course_id, :name, :status, 
   :adjustment_factor_cap, :deadline, :full_grade
 

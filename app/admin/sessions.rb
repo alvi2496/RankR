@@ -1,5 +1,7 @@
 ActiveAdmin.register Session do
 
+  menu priority: 1
+
   permit_params :admin_user_id, :title, :default_session, 
                 courses_attributes: [:id, :title, :_destroy]
 
