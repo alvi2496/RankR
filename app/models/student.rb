@@ -15,8 +15,8 @@ class Student < ApplicationRecord
     self.authored_ranks.where(assignment_id: assignment_id).exists?
   end
 
-  def can_rank?(receiver_id)
-    self.team.students.pluck(:id).include? receiver_id.to_i
+  def can_rank?(receiver_id, assignment_id)
+    self.team_members(assignment_id).pluck(:id).include? receiver_id.to_i
   end
 
   def has_not_ranked_for(assignment_id)
@@ -51,5 +51,10 @@ class Student < ApplicationRecord
 
   def already_enrolled_in_course(course_id)
     CoursesStudent.find_by(course_id: course_id, student_id: self.id).present?
+  end
+
+  def team_members(assignment_id)
+    assignment =  Assignment.find(assignment_id)
+    StudentsTeam.find_by(course_id: assignment.course.id, student_id: self.id).team.students
   end
 end

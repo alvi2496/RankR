@@ -43,7 +43,7 @@
                                     %td= assignment.assignments_students.find_by(student_id: student.id).individual_project_grade
                                     %td= assignment.assignments_students.find_by(student_id: student.id).adjustment_factor
                                     %td= team.assignments_teams.find_by(assignment_id: assignment.id).grade
-                                    %td= assignment.assignments_students.find_by(student_id: student.id).grade
+                                    %td= assignment.assignments_students.find_by(student_id: student.id).individual_grade
                     
                     - received_ranks = team.students.first&.received_ranks&.where(assignment_id: assignment.id)&.length()
                     - unrank_count = team.students.length()  
@@ -58,9 +58,7 @@
                             %tbody
                                 - team.students.each do |student|
                                     - if student.has_not_ranked_for(assignment.id)
-                                        %tr 
-                                    %tr 
-                                        %tr 
+                                        %tr
                                             %td= student.student_id
                                             %td= student.name
                                             %td= student.email

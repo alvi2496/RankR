@@ -8,8 +8,8 @@ class RanksController < ApplicationController
         if current_student.has_already_ranked_for(params[:assignment_id])
             redirect_to assignment_ranks_path(params[:assignment_id])
         end
-        @team_members = current_student.team.students
         @assignment = Assignment.find(params[:assignment_id])
+        @team_members = self.team_members(@assignment.id)
         @ranks = []
         @team_members.each do |team_member|
             @ranks << @assignment.ranks.new(
@@ -22,7 +22,7 @@ class RanksController < ApplicationController
     def create
         unless current_student.has_already_ranked_for(ranks_params[:assignment_id])
             ranks_params[:ratings].each do |receiver_id, rank|
-                if current_student.can_rank?(receiver_id)
+                if current_student.can_rank?(receiver_id, ranks_params[:assignment_id])
                     Rank.create(
                         assignment_id: ranks_params[:assignment_id], 
                         ranker_id: current_student.id,
