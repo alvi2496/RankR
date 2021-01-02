@@ -8,6 +8,7 @@ class CreateAssignmentsStudents < ActiveRecord::Migration[6.0]
       t.float :individual_project_grade
       t.float :grade
       t.string :rank
+      t.decimal :individual_grade
       t.timestamps
     end
   end

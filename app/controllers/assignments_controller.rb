@@ -7,14 +7,14 @@ class AssignmentsController < ApplicationController
     end
 
     def show
-        teams = Team.all
-        ranks = Rank.where(assignment_id: params[:id]).joins(:students).joins(:ranks)
         assignment = Assignment.find(params[:id])
+        teams = assignment.teams
+        ranks = Rank.where(assignment_id: params[:id]).joins(:students).joins(:ranks)
         teams.each do |team|
-        team.students.each do |student|
-            AssignmentsStudent.calculate_score(student.id, assignment.id)
-        end
-        team = team.calculate_team_average(assignment.id)
+            team.students.each do |student|
+                AssignmentsStudent.calculate_score(student.id, assignment.id, team.id)
+            end
+            AssignmentsTeam.calculate_team_average(team.id, assignment.id)
         end
         redirect_to admin_assignment_path(assignment.id)
     end

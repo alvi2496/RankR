@@ -4,6 +4,7 @@ class CreateAssignmentsTeams < ActiveRecord::Migration[6.0]
       t.belongs_to :assignment
       t.belongs_to :team
       t.decimal :grade
+      t.decimal :average
       t.timestamps
     end
   end

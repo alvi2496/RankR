@@ -18,14 +18,27 @@ ActiveAdmin.register Team do
     redirect_to :action => :index, :notice => "Students enrolled successfully!"
   end
 
+  collection_action :team_grade, :method => :post do
+    assignment_team = AssignmentsTeam.find_by(team_id: params[:team_grade][:team_id], assignment_id: params[:team_grade][:assignment_id])
+    assignment_team.update(grade: params[:team_grade][:grade])
+    redirect_to admin_assignment_path(id: params[:team_grade][:assignment_id]), :notice => "Team grade updated successfully!"
+  end
+
   show do
     team = Team.find(params[:id])
     course = team.course
     students = course.students
-    render 'students_enrollment', {
-      team: team, course: course,
-      students: students
-    }
+    if params[:page] == 'student_enrollment'
+      render 'students_enrollment', {
+        team: team, course: course,
+        students: students
+      }
+    elsif params[:page] == 'update_team_grade'
+      render 'update_team_grade', {
+        team: team, 
+        assignment_id: params[:assignment_id]
+      }
+    end
   end
 
   index do
@@ -36,7 +49,7 @@ ActiveAdmin.register Team do
     column :updated_at
     column :actions do |team|
       links = []
-      links << link_to('Update student enrollment', admin_team_path(team))
+      links << link_to('Update student enrollment', admin_team_path(id: team.id, page: 'student_enrollment'))
       links << link_to('Edit', edit_admin_team_path(team))
       links.join('  |  ').html_safe
     end

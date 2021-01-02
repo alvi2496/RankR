@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2021_01_01_011917) do
     t.float "individual_project_grade"
     t.float "grade"
     t.string "rank"
+    t.decimal "individual_grade"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assignment_id"], name: "index_assignments_students_on_assignment_id"
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_01_01_011917) do
     t.bigint "assignment_id"
     t.bigint "team_id"
     t.decimal "grade"
+    t.decimal "average"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assignment_id"], name: "index_assignments_teams_on_assignment_id"

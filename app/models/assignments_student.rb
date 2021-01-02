@@ -9,12 +9,12 @@ class AssignmentsStudent < ApplicationRecord
     }
 
 
-    def self.calculate_score(student_id, assignment_id)
+    def self.calculate_score(student_id, assignment_id, team_id)
         grade = self.find_by(assignment_id: assignment_id, student_id: student_id)
         grade = self.calculate_individual_average(grade)
-        grade = self.calculate_adjustment_factor(grade)
+        grade = self.calculate_adjustment_factor(grade, team_id)
         grade = self.calculate_individual_project_grade(grade)
-        grade = self.calculate_individual_grade(grade)
+        grade = self.calculate_individual_grade(grade, team_id)
         return self.find_by(assignment_id: assignment_id, student_id: student_id)
     end
 
@@ -29,9 +29,9 @@ class AssignmentsStudent < ApplicationRecord
         return grade
     end
 
-    def self.calculate_adjustment_factor(grade)
+    def self.calculate_adjustment_factor(grade, team_id)
         adj_fac_cap = grade.assignment.adjustment_factor_cap
-        team_avg = grade.student.team.team_average
+        team_avg = AssignmentsTeam.find_by(assignment_id: grade.assignment.id, team_id: team_id).average
         if grade.individual_average && team_avg && adj_fac_cap
             adj_factor = (grade.individual_average / team_avg)&.round(2)
             adj_factor = adj_factor > adj_fac_cap ? adj_fac_cap : adj_factor
@@ -49,9 +49,10 @@ class AssignmentsStudent < ApplicationRecord
         return grade
     end
 
-    def self.calculate_individual_grade(grade)
-        if grade.student.team.team_grade && grade.adjustment_factor
-            ind_grade = (grade.student.team.team_grade * grade.adjustment_factor)&.round(2)
+    def self.calculate_individual_grade(grade, team_id)
+        team_grade = AssignmentsTeam.find_by(assignment_id: grade.assignment.id, team_id: team_id).grade
+        if team_grade && grade.adjustment_factor
+            ind_grade = (team_grade * grade.adjustment_factor)&.round(2)
             ind_grade = ind_grade > grade.assignment.full_grade ? grade.assignment.full_grade : ind_grade
             grade.update(individual_grade: ind_grade)
         end

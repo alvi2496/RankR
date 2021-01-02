@@ -1,0 +1,8 @@
+%h2 Update team grade
+
+= form_for :team_grade, url: team_grade_admin_teams_path do |f|
+    = f.hidden_field :assignment_id, value: assignment_id
+    = f.hidden_field :team_id, value: team.id
+    = f.label "Team grade"
+    = f.text_field :grade
+    = submit_tag 'Submit', class: 'btn btn-primary'

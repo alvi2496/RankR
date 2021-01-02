@@ -12,6 +12,7 @@
                     %h4= team.name
             %div{id: "collapse#{team.id}", class: "panel-collapse collapse"}
                 .panel-body
+                    = link_to 'Update grade', admin_team_path(id: team.id, page: 'update_team_grade', assignment_id: assignment.id), class: "btn btn-primary"
                     %table.table.table-responsive-md.table-striped
                         %thead
                             %tr
@@ -20,11 +21,11 @@
                                 - for i in 1..team.students.length()
                                     %th= "Vote #{i}"
                                 %th Individual Avgerage
-                                -# %th Team Average
+                                %th Team Average
                                 %th Adj Factor Cap
                                 %th Individual Project Grade
                                 %th Adj. Fctr.
-                                -# %th Team Grade
+                                %th Team Grade
                                 %th Individual Grade
                                 
                         %tbody
@@ -37,11 +38,11 @@
                                     - for i in 1..(team.students.length() - student.received_ranks.where(assignment_id: assignment.id).length())
                                         %td= "N/A"
                                     %td= assignment.assignments_students.find_by(student_id: student.id).individual_average
-                                    -# %td= team.team_average
+                                    %td= team.assignments_teams.find_by(assignment_id: assignment.id).average
                                     %td= assignment.adjustment_factor_cap
                                     %td= assignment.assignments_students.find_by(student_id: student.id).individual_project_grade
                                     %td= assignment.assignments_students.find_by(student_id: student.id).adjustment_factor
-                                    -# %td= team.team_grade
+                                    %td= team.assignments_teams.find_by(assignment_id: assignment.id).grade
                                     %td= assignment.assignments_students.find_by(student_id: student.id).grade
                     
                     - received_ranks = team.students.first&.received_ranks&.where(assignment_id: assignment.id)&.length()
