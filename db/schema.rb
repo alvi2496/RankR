@@ -136,12 +136,10 @@ ActiveRecord::Schema.define(version: 2021_01_01_011917) do
 
   create_table "students_teams", force: :cascade do |t|
     t.bigint "course_id"
-    t.bigint "assignment_id"
     t.bigint "student_id"
     t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["assignment_id"], name: "index_students_teams_on_assignment_id"
     t.index ["course_id", "student_id", "team_id"], name: "index_students_teams_on_course_id_and_student_id_and_team_id", unique: true
     t.index ["course_id"], name: "index_students_teams_on_course_id"
     t.index ["student_id"], name: "index_students_teams_on_student_id"

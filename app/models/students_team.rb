@@ -2,7 +2,6 @@ class StudentsTeam < ApplicationRecord
     belongs_to :course
     belongs_to :student
     belongs_to :team
-    belongs_to :assignment
 
     def self.assign_students(course_id, team_id, student_ids)
         previous_student_teams = StudentsTeam.where(course_id: course_id, team_id: team_id)
