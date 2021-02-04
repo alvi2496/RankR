@@ -9,7 +9,7 @@ class RanksController < ApplicationController
             redirect_to assignment_ranks_path(params[:assignment_id])
         end
         @assignment = Assignment.find(params[:assignment_id])
-        @team_members = self.team_members(@assignment.id)
+        @team_members = current_student.team_members(@assignment.id)
         @ranks = []
         @team_members.each do |team_member|
             @ranks << @assignment.ranks.new(
